@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -18,7 +18,8 @@ import {
   Smile,
   Star,
   Archive,
-  Trash2
+  Trash2,
+  MessageSquare   // ✅ Ajout de l'import manquant
 } from 'lucide-react';
 
 const conversations = [
@@ -123,8 +124,6 @@ export default function MessagesPage() {
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
-    
-    // Here you would typically send the message to your backend
     console.log('Sending message:', newMessage);
     setNewMessage('');
   };
