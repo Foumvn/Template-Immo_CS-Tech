@@ -1,13 +1,26 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useState } from 'react'
+
+// Layout
+import { Header } from '@/components/layout/header'
+import { Footer } from '@/components/layout/footer'
+
+// UI Components
+import { 
+  Card, 
+  CardContent, 
+  CardHeader, 
+  CardTitle, 
+  CardDescription,   // ✅ ajouté ici
+  CardFooter 
+} from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+
+// Icons
 import { 
   Home, 
   Eye, 
@@ -23,7 +36,7 @@ import {
   Search,
   Filter,
   MoreHorizontal
-} from 'lucide-react';
+} from 'lucide-react'
 
 const dashboardStats = [
   {
@@ -58,7 +71,7 @@ const dashboardStats = [
     color: 'text-purple-600',
     bgColor: 'bg-purple-100'
   }
-];
+]
 
 const recentProperties = [
   {
@@ -88,7 +101,7 @@ const recentProperties = [
     status: 'En favoris',
     isFavorite: true
   }
-];
+]
 
 const upcomingVisits = [
   {
@@ -107,10 +120,41 @@ const upcomingVisits = [
     time: '10:30',
     type: 'Visite 3D'
   }
-];
+]
+
+// ⚠️ Exemple de données "conversations" manquantes dans ton code original
+const conversations = [
+  {
+    id: 1,
+    name: 'Jean Dupont',
+    avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+    lastMessage: 'Bonjour, je voulais savoir si...',
+    property: 'Appartement 3P - Nice',
+    time: '09:15',
+    unread: 2
+  },
+  {
+    id: 2,
+    name: 'Sophie Martin',
+    avatar: 'https://randomuser.me/api/portraits/women/45.jpg',
+    lastMessage: 'Merci pour la visite !',
+    property: 'Villa 5P - Cannes',
+    time: 'Hier',
+    unread: 0
+  },
+  {
+    id: 3,
+    name: 'Thomas Bernard',
+    avatar: 'https://randomuser.me/api/portraits/men/76.jpg',
+    lastMessage: 'Quand est prévue la signature ?',
+    property: 'Loft - Lyon',
+    time: 'Lundi',
+    unread: 1
+  }
+]
 
 export default function DashboardPage() {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('overview')
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -137,22 +181,16 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* Onglets */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
           <TabsList className="bg-white border border-gray-200 p-1 rounded-xl">
-            <TabsTrigger value="overview" className="data-[state=active]:bg-gray-100 rounded-lg">
-              Vue d'ensemble
-            </TabsTrigger>
-            <TabsTrigger value="properties" className="data-[state=active]:bg-gray-100 rounded-lg">
-              Mes propriétés
-            </TabsTrigger>
-            <TabsTrigger value="visits" className="data-[state=active]:bg-gray-100 rounded-lg">
-              Visites
-            </TabsTrigger>
-            <TabsTrigger value="messages" className="data-[state=active]:bg-gray-100 rounded-lg">
-              Messages
-            </TabsTrigger>
+            <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
+            <TabsTrigger value="properties">Mes propriétés</TabsTrigger>
+            <TabsTrigger value="visits">Visites</TabsTrigger>
+            <TabsTrigger value="messages">Messages</TabsTrigger>
           </TabsList>
 
+          {/* --- Vue d’ensemble --- */}
           <TabsContent value="overview" className="space-y-8">
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -178,16 +216,14 @@ export default function DashboardPage() {
               ))}
             </div>
 
-            {/* Recent Activity */}
+            {/* Properties + Visits */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Recent Properties */}
               <Card className="border-0 shadow-sm">
                 <CardHeader className="pb-4">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-lg">Propriétés récentes</CardTitle>
-                    <Button variant="ghost" size="sm">
-                      Voir tout
-                    </Button>
+                    <Button variant="ghost" size="sm">Voir tout</Button>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -203,9 +239,7 @@ export default function DashboardPage() {
                         <p className="text-sm text-gray-500">{property.location}</p>
                         <div className="flex items-center justify-between mt-1">
                           <span className="text-sm font-semibold text-gray-900">{property.price}</span>
-                          <Badge variant="outline" className="text-xs">
-                            {property.status}
-                          </Badge>
+                          <Badge variant="outline" className="text-xs">{property.status}</Badge>
                         </div>
                       </div>
                       <Button variant="ghost" size="icon">
@@ -221,9 +255,7 @@ export default function DashboardPage() {
                 <CardHeader className="pb-4">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-lg">Visites à venir</CardTitle>
-                    <Button variant="ghost" size="sm">
-                      Planifier
-                    </Button>
+                    <Button variant="ghost" size="sm">Planifier</Button>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -231,9 +263,7 @@ export default function DashboardPage() {
                     <div key={visit.id} className="p-4 rounded-xl border border-gray-200 bg-white">
                       <div className="flex items-center justify-between mb-3">
                         <h4 className="font-medium text-gray-900">{visit.property}</h4>
-                        <Badge className="bg-blue-100 text-blue-700">
-                          {visit.type}
-                        </Badge>
+                        <Badge className="bg-blue-100 text-blue-700">{visit.type}</Badge>
                       </div>
                       <div className="flex items-center justify-between text-sm">
                         <div className="flex items-center space-x-2 text-gray-600">
@@ -244,18 +274,12 @@ export default function DashboardPage() {
                       </div>
                     </div>
                   ))}
-                  
-                  {upcomingVisits.length === 0 && (
-                    <div className="text-center py-8 text-gray-500">
-                      <Calendar className="h-8 w-8 mx-auto mb-2 text-gray-300" />
-                      <p>Aucune visite planifiée</p>
-                    </div>
-                  )}
                 </CardContent>
               </Card>
             </div>
           </TabsContent>
 
+          {/* --- Propriétés --- */}
           <TabsContent value="properties" className="space-y-6">
             <Card className="border-0 shadow-sm">
               <CardHeader>
@@ -277,6 +301,7 @@ export default function DashboardPage() {
             </Card>
           </TabsContent>
 
+          {/* --- Visites --- */}
           <TabsContent value="visits" className="space-y-6">
             <Card className="border-0 shadow-sm">
               <CardHeader>
@@ -295,12 +320,8 @@ export default function DashboardPage() {
                         <p className="text-sm text-gray-500">{visit.date} à {visit.time}</p>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Badge className="bg-blue-100 text-blue-700">
-                          {visit.type}
-                        </Badge>
-                        <Button variant="outline" size="sm">
-                          Modifier
-                        </Button>
+                        <Badge className="bg-blue-100 text-blue-700">{visit.type}</Badge>
+                        <Button variant="outline" size="sm">Modifier</Button>
                       </div>
                     </div>
                   ))}
@@ -309,6 +330,7 @@ export default function DashboardPage() {
             </Card>
           </TabsContent>
 
+          {/* --- Messages --- */}
           <TabsContent value="messages" className="space-y-6">
             <Card className="border-0 shadow-sm">
               <CardHeader>
@@ -331,14 +353,10 @@ export default function DashboardPage() {
                           <span className="text-xs text-gray-500">{conv.time}</span>
                         </div>
                         <p className="text-sm text-gray-600 truncate">{conv.lastMessage}</p>
-                        <Badge variant="outline" className="text-xs mt-1">
-                          {conv.property}
-                        </Badge>
+                        <Badge variant="outline" className="text-xs mt-1">{conv.property}</Badge>
                       </div>
                       {conv.unread > 0 && (
-                        <Badge className="bg-blue-600 text-white">
-                          {conv.unread}
-                        </Badge>
+                        <Badge className="bg-blue-600 text-white">{conv.unread}</Badge>
                       )}
                     </div>
                   ))}
@@ -356,5 +374,5 @@ export default function DashboardPage() {
       
       <Footer />
     </div>
-  );
+  )
 }
